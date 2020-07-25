@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/mui.picker.css" />
+		<link rel="stylesheet" type="text/css" href="css/mui.dtpicker.css" />
+		<style>
+			.main {
+				font-weight: 700;
+			}
+			
+			.mui-content {
+				background-color: #fff;
+				padding-top: 70px;
+			}
+			
+			#detail div {
+				padding: 10px 15px 5px;
+			}
+			
+			.seats-ok {
+				color: #4cd964
+			}
+			
+			.seats-no {
+				color: #ccc;
+			}
+			
+			[v-cloak] {
+				display: none;
+			}
+			
+			.area {
+				margin: 20px auto 0px auto;
+			}
+			
+			.mui-input-group:first-child {
+				margin-top: 20px;
+			}
+			
+			.mui-input-group label {
+				width: 30%;
+			}
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 70%;
+			}
+			
+			.mui-checkbox input[type=checkbox],
+			.mui-radio input[type=radio] {
+				top: 6px;
+			}
+			
+			.mui-content-padded {
+				margin-top: 25px;
+			}
+			
+			.mui-btn {
+				padding: 10px;
+			}
+			
+			::-webkit-input-placeholder {
+				color: #ccc;
+			}
+			
+			#detail .add-person div {
+				padding-left: 0;
+				padding-right: 0;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">详细信息</h1>
+		</header>
+		<div class="mui-content" style="height: 100%;">
+			<div id="detail" v-cloak>
+				<div class="main">
+					<span>{{item.from_city}}</span> <span> -> </span> <span>{{item.to_city}}</span>
+				</div>
+				<div>出发时间：{{item.start_time}} </div>
+				<div>上车地点：{{item.position}}</div>
+				<div :class="item.seats_left>0?'seats-ok':'seats-no'" v-if="item.type==1">剩余座位：{{item.seats_left}} </div>
+				<div v-else>乘车人数：{{item.seats_left}} </div>
+				<div>发布人：{{item.true_name}} </div>
+				<div>联系方式：<span class="#phone">{{item.phone}}</span></div>
+				<div>
+					<a v-if="item.is_owner" type="button" class="mui-btn mui-btn-blue mui-btn-block" @tap="update(item.id)">修改</a>
+					<a v-else-if="item.seats_left>0" type="button" class="mui-btn mui-btn-green mui-btn-block" @tap="tel(item.phone)">电话沟通</a>
+					<!--<a v-else-if="item.seats_left>0" type="button" class="mui-btn mui-btn-green mui-btn-block" @tap="req(item.id)">在线申请</a>-->
+					<a v-else type="button" class="mui-btn mui-btn-block">已没有剩余座位</a>
+				</div>
+				<div class="mui-content-padded" v-show="item.is_owner && item.type==1">
+					<p>如已有老乡联系确认坐车，请尽快修改剩余座位数，给大家提供准确有效的信息</p>
+				</div>
+			</div>
+		</div>
+
+		<script src="js/mui.min.js" type="text/javascript"></script>
+		<script src="js/app.js"></script>
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var search = location.search;
+			var action = '';
+
+			var detail = new Vue({
+				el: '#detail',
+				data: {
+					item: {}
+				}
+			});
+
+			if(search && search.length > 1) {
+				var para = {};
+				search = search.substring(1);
+				var _arr = search.split("&");
+				for(var i = 0; i < _arr.length; i++) {
+					var _arr_inner = _arr[i].split("=");
+					if(_arr_inner && _arr_inner.length == 2) {
+						para[_arr_inner[0]] = _arr_inner[1];
+					}
+				}
+				if(para.action && para.action == "show") {
+					action = "show";
+					var id = para.id;
+					if(id) {
+						var item_str = localStorage.getItem(id);
+						if(item_str) {
+							var item_obj = JSON.parse(item_str);
+							if(item_obj.id == id) {
+								detail.item = item_obj;
+							}
+							//localStorage.removeItem(id);
+						}
+					}
+				}
+			}
+
+			function tel(phone) {
+				location.href = "tel:" + phone;
+			}
+
+			function update(id) {
+				location.href = "car.html?id=" + id + "&action=update";
+			}
+
+			function req(id) {
+				if(getCookie("isLogin")) {
+					var btnArray = ['取消', '确定'];
+					mui.prompt('请输入预计几人坐车：', '', '', btnArray, function(e) {
+						if(e.index == 1) {
+							alert(e.value);
+						}
+					})
+				} else {
+					//未登录
+					location.href = "login.html";
+				}
+			}
+		</script>
+	</body>
+
+</html>

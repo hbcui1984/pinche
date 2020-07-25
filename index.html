@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/mui.min.css" />
+		<style type="text/css">
+			.main {
+				font-weight: 700;
+			}
+			
+			.mui-modal .mui-content {
+				background-color: #fff;
+				padding-top: 70px;
+			}
+			
+			#detail div {
+				padding: 10px 15px 5px;
+			}
+			
+			.seats-ok {
+				color: #4cd964
+			}
+			
+			.seats-no {
+				color: #ccc;
+			}
+			
+			.mui-bar-popover {
+				width: 30%;
+			}
+			
+			.tag {
+				margin-right: 10px;
+				font-weight: normal;
+				font-size: 13px;
+				color: #fff;
+				padding: 2px 3px;
+				border-radius: 3px;
+			}
+			
+			[v-cloak] {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">老乡拼车</h1>
+		</header>
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item mui-active">
+				<span class="mui-icon mui-icon-home"></span>
+				<span class="mui-tab-label">首页</span>
+			</a>
+			<a class="mui-tab-item" href="#Popover_0">
+				<span class="mui-icon mui-icon-plus"></span>
+				<span class="mui-tab-label">发帖</span>
+			</a>
+		</nav>
+		<div id="Popover_0" class="mui-popover mui-bar-popover">
+			<div class="mui-popover-arrow"></div>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell" data-type="zhaoren">
+					<a href="#">车找人</a>
+				</li>
+				<li class="mui-table-view-cell" data-type="zhaoche">
+					<a href="#">人找车</a>
+				</li>
+			</ul>
+		</div>
+
+		<div id="useraction" class="mui-popover mui-popover-action mui-popover-bottom">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<a href="login.html">已有账号，立即登录</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a href="reg.html">还没账号，先注册</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<a href="#useraction"><b>取消</b></a>
+				</li>
+			</ul>
+		</div>
+
+		<div class="mui-content">
+			<ul class="mui-table-view" id="list" v-cloak>
+				<li class="mui-table-view-cell mui-media" v-for="item in items">
+					<a href="javascript:;" :data-guid="item.id" @tap="open_detail(item)">
+						<div class="mui-media-body">
+							<div class="main">
+								<span v-if="item.type==1" class="tag" style="background-color: #00A2FF;">车找人</span>
+								<span v-else class="tag" style="background-color: #EF5FA7;">人找车</span>
+								<span>{{item.from_city}}</span> <span> -> </span> <span>{{item.to_city}}</span></div>
+							<div class="mui-ellipsis">
+								<div>出发时间：{{item.start_time.substring(5,item.start_time.length - 3)}} </div>
+								<div :class="item.seats_left>0?'seats-ok':'seats-no'" v-if="item.type==1">剩余座位：{{item.seats_left}} </div>
+								<div v-else>乘车人数：{{item.seats_left}} </div>
+								
+							</div>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+
+	</body>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+
+	<script type="text/javascript">
+		var list = new Vue({
+			el: '#list',
+			data: {
+				items: [] //列表信息流数据
+			}
+		});
+
+		app.getCarList(function(rsp) {
+			if(rsp.ret == 0) {
+				console.log(JSON.stringify(rsp));
+				list.items = rsp.data;
+			} else {
+				mui.alert(rsp.desc);
+			}
+		});
+
+		function open_detail(item) {
+
+			localStorage.setItem(item.id, JSON.stringify(item));
+
+			location.href = "car_detail.html?id=" + item.id + "&action=show";
+
+		}
+
+		mui(".mui-bar-popover").on("tap", "li", function() {
+			if(getCookie("isLogin")) {
+				location.href = "car.html?action=add&type=" + this.getAttribute("data-type");
+			} else {
+				//未登录
+				mui("#useraction").popover("show");
+
+				mui('#useraction').on('tap', 'li>a', function() {
+					//关闭actionsheet
+					mui('#useraction').popover('close');
+					//页面跳转
+					var url = this.getAttribute("href");
+					if(url) {
+						location.href = url;
+					}
+				})
+			}
+
+		})
+	</script>
+
+</html>

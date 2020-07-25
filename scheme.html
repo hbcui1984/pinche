@@ -1,0 +1,951 @@
+
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>HelloH5</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			body,
+			html {
+				height: 100%;
+				background-color: #FFFFFF;
+				text-align: center;
+			}
+			
+			.main {
+				margin: 0 auto;
+				max-width: 100%;
+				width: 700px;
+				height: 100%;
+			}
+			
+			.info {
+				height: 100%;
+				position: relative;
+			}
+			
+			.downloads-wrap {
+				position: absolute;
+				bottom: 0;
+				/*top:300px;*/
+				width: 100%;
+			}
+			
+			.logo-wrap {
+				position: absolute;
+				top: 50px;
+				width: 100%;
+			}
+			
+			.logo-wrap>img {
+				width: 79px;
+				height: 79px;
+			}
+			
+			.logo-wrap h2 {
+				font-size: 18px;
+				color: #2A2A2A;
+				font-weight: bold;
+				margin-top: 33px;
+			}
+			
+			.logo-wrap p {
+				margin-top: 21px;
+				font-size: 18px;
+				font-weight: normal;
+				color: #2A2A2A;
+			}
+			
+			.logo-wrap #show_qrcode {
+				display: block;
+				font-size: 10px;
+				color: #007AFF;
+				text-decoration: none;
+				margin-top: 28px;
+			}
+			
+			.logo-wrap * {
+				vertical-align: middle;
+			}
+			
+			.logo-wrap #show_qrcode>img {
+				width: 11px;
+				height: 11px;
+			}
+			
+			.logo-wrap #show_qrcode>span {
+				display: inline-block;
+				margin-left: 10px;
+			}
+			
+			.command-content p {
+				display: inline-block;
+				font-size: 10px;
+				color: #2A2A2A;
+			}
+			
+			.command-content a {
+				display: inline-block;
+				font-size: 9px;
+				color: #007AFF;
+				width: 50px;
+			}
+			
+			.qrcode-content {
+				display: none;
+				margin-top: 50px;
+				margin-bottom: 20px;
+				font-size: 20px;
+			}
+			
+			.qrcode-content img {
+				width: 120px;
+				height: 120px;
+			}
+			
+			.qrcode-content span {
+				display: block;
+			}
+			
+			.qrcode-content .code {
+				display: inline-block;
+				color: #007AFF;
+			}
+			
+			.qrcode-content p {
+				margin: 0;
+				padding: 0;
+				display: inline-block;
+			}
+			
+			.btn {
+				font-size: 12px;
+				width: 288px;
+				height: 40px;
+				line-height: 40px;
+				border-radius: 5px;
+				outline: none;
+			}
+			
+			.btn-primary {
+				background-color: #007AFF;
+				border: 1px solid #007AFF;
+				color: #FFFFFF;
+				margin-top: 24px;
+			}
+			
+			.btn-secondary {
+				background-color: #FFFFFF;
+				border: 1px solid #007AFF;
+				color: #007AFF;
+				margin-top: 17px;
+				margin-bottom: 29px;
+			}
+			
+			.more img {
+				height: 10px;
+				margin-bottom: 24px;
+			}
+			
+			.screenshots-content {
+				border-top: 1px solid #BFBFBF;
+				margin: 0 15px 0 15px;
+				padding: 0 24px;
+				position: relative;
+			}
+			
+			.screenshots-content h2 {
+				font-size: 15px;
+				font-weight: normal;
+				color: #2A2A2A;
+				margin-top: 40px;
+				margin-bottom: 21px;
+				text-align: left;
+			}
+			
+			.list-wrap {
+				overflow-x: scroll;
+				margin-bottom: 36px;
+				margin-left: 39px;
+			}
+			
+			.list-wrap ul {
+				display: block;
+				list-style: none;
+				white-space: nowrap;
+			}
+			
+			.list-wrap ul li {
+				display: inline-block;
+				/*margin-right: 17px;*/
+				margin: 0 9px;
+				vertical-align: middle;
+			}
+			
+			.list-wrap ul li:first-child {
+				margin: 0 9px 0 0;
+			}
+			
+			.list-wrap ul li img {
+				width: 176px;
+				height: 311px;
+				border: 1px solid #949494;
+			}
+			
+			.desc-content {
+				border-top: 1px solid #BFBFBF;
+				margin: 0 15px 36px 15px;
+				padding: 0 24px;
+				text-align: center;
+			}
+			
+			.desc-content h2 {
+				font-size: 15px;
+				font-weight: normal;
+				color: #2A2A2A;
+				margin-top: 40px;
+				margin-bottom: 21px;
+				text-align: left;
+			}
+			
+			.desc-content pre {
+				white-space: pre-wrap;
+				word-break: break-word;
+				width: 100%;
+				font-size: 14px;
+				color: #2A2A2A;
+				text-align: left;
+				font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+			}
+			
+			.footer {
+				text-align: center;
+				padding: 20px;
+				border-top: 1px solid #DAE2E3;
+			}
+			
+			.show {
+				display: block;
+			}
+			
+			.hide {
+				display: none;
+			}
+			
+			.overlay {
+				width: 100%;
+				height: 100%;
+				left: 0px;
+				top: 0px;
+				background: rgba(0, 0, 0, 0.6);
+				z-index: 200;
+				position: fixed;
+			}
+			
+			.bottom-wrap {
+				position: absolute;
+				bottom: 0;
+				z-index: 201;
+				width: 100%;
+				padding-bottom: 18px;
+				background-color: #FFFFFF;
+			}
+			
+			.bottom-wrap .head-content {
+				padding: 19px 0;
+				text-align: left;
+				margin-left: 21px;
+			}
+			
+			.bottom-wrap .head-content * {
+				vertical-align: middle;
+			}
+			
+			.bottom-wrap .head-content img {
+				display: inline-block;
+				width: 28px;
+				height: 28px;
+			}
+			
+			.bottom-wrap .head-content h2 {
+				display: inline-block;
+				font-size: 15px;
+				font-weight: bold;
+				color: #313131;
+				margin-left: 10px;
+			}
+			
+			.bottom-wrap .head-content .loading-tip {
+				display: inline-block;
+				color: red;
+			}
+			
+			.bottom-wrap .tips-content {
+				text-align: left;
+				margin-left: 21px;
+				margin-right: 21px;
+				border-top: 1px solid #BFBFBF;
+			}
+			
+			.bottom-wrap .tips-content .tip-title {
+				font-size: 12px;
+				color: #313131;
+				font-weight: bold;
+				margin-left: 21px;
+				margin-top: 24px;
+				margin-bottom: 19px;
+			}
+			
+			.bottom-wrap .tips-content ul li {
+				font-size: 12px;
+				color: #313131;
+				font-weight: normal;
+				margin-left: 54px;
+				line-height: 20px;
+			}
+			
+			.bottom-wrap .tips-content ul li a {
+				margin: 0 5px;
+				color: #007AFF;
+			}
+			
+			.bottom-wrap button {
+				width: 327px;
+			}
+			
+			.qrcode-wrap {
+				position: absolute;
+				width: 320px;
+				height: 338px;
+				background-color: #FFFFFF;
+				top: 50%;
+				left: 50%;
+				margin-top: -164px;
+				margin-left: -160px;
+				border-radius: 5px;
+			}
+			
+			.qrcode-wrap div.close {
+				display: block;
+				width: 30px;
+				height: 30px;
+				position: absolute;
+				right: 15px;
+				top: 10px;
+			}
+			
+			.qrcode-wrap div.close img {
+				width: 14px;
+				height: 14px;
+				margin-top: 8px;
+			}
+			
+			.qrcode-wrap .qrcode {
+				width: 211px;
+				height: 211px;
+				margin-top: 28px;
+			}
+			
+			.qrcode-wrap .channel {
+				width: 211px;
+			}
+			
+			.qrcode-wrap .desc {
+				color: #C5C5C5;
+				font-size: 12px;
+			}
+			/*pc部分的样式开始*/
+			
+			.pc-info {
+				display: none;
+			}
+			
+			.pc-info {
+				position: relative;
+				text-align: left;
+				margin-top: 80px;
+			}
+			
+			.pc-name h2 {
+				font-size: 24px;
+				color: #2A2A2A;
+				font-weight: bold;
+			}
+			
+			.pc-name p {
+				font-size: 22px;
+				color: #2A2A2A;
+				font-weight: normal;
+				margin-top: 30px;
+			}
+			
+			.pc-download {
+				margin: 50px 0 80px 0;
+			}
+			
+			.btn-download {
+				width: 200px;
+				background-color: #FFFFFF;
+				border: 1px solid #818181;
+				color: #818181;
+			}
+			
+			.btn-download .icon {
+				margin-right: 5px;
+			}
+			
+			@font-face {
+				font-family: "publish_iconfont";
+				src: url('fonts/iconfont.ttf') format('truetype');
+			}
+			
+			.publish_iconfont {
+				font-family: "publish_iconfont" !important;
+				font-size: 16px;
+				font-style: normal;
+				-webkit-font-smoothing: antialiased;
+				-webkit-text-stroke-width: 0.2px;
+				-moz-osx-font-smoothing: grayscale;
+			}
+			
+			.btn-download.android {
+				border-color: #00AD25;
+				color: #00AD25;
+			}
+			
+			.btn-download.ios {
+				margin-left: 16px;
+			}
+			/*pc部分的样式结束*/
+			
+			@media only screen and (min-width:768px) {
+				.info.mobile {
+					display: none;
+				}
+				.pc-info {
+					display: block;
+				}
+				.desc-content {
+					padding: 0;
+					margin: 0 0 80px 0;
+					border: none;
+				}
+				.desc-content pre {
+					color: #818181;
+					font-size: 14px;
+				}
+				.desc-content h2 {
+					font-size: 22px;
+					margin-bottom: 40px;
+				}
+				.screenshots-content {
+					border: none;
+					margin: 0;
+					padding: 0;
+				}
+				.screenshots-content h2 {
+					font-size: 22px;
+					margin-bottom: 40px;
+				}
+			}
+			
+			.downloads-content .package {
+				visibility: hidden;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="main">
+			<!--移动端应用简要信息-->
+			<div class="info mobile">
+				<!--logo-->
+				<div class="logo-wrap">
+					<img src="//img-cdn-qiniu.dcloud.net.cn/h5.png" />
+					<h2>HelloH5 - HTML5专家</h2>
+					<p>原生40万API随意调用</p>
+					<div href="javascript:;" id="show_qrcode">
+						<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAABhElEQVRIS7WUsUsCYRjGf69GQ0NZNDQ5OURgOES1Ba3ZP1BLc7Snh4ND3d1/ELgXDQ0NCdHQ1FBLQYGTDkFzKQhBom+kgud53nGa3/x8v+/jfZ/nESZ0pM01VAP5TWJtTZRqoNYUcYK/EUoDl5QEMEc/uIZQ9tAmgWn6wMoblqwOiA29AXZc4CKmpD2070DcG5zRBFG2afGAJSX8wIamENZpco8tZQz1ARu6B5yjHGLJmS84qxkEC9jHlAt/8MR+7B7c2DOGOsrjwEKEFLA4uiuCzDmSjzM6H8TF7gYj0w2K3wVbvjoBGRf8SZ2CNMjrLBAhL9X/inQaU4pk9RVpByTmBIdZnnsQOSI80aIALPSDw0Xab8I1b3BWVxB2aXGHLS9DklcBroBNYMv1yhDwaJF2soeAjzXOFBsIz5xIJaArlonwV5W906KBJde95YWbsXdtOvhOV/wAHx5bWQJmPPvY0AOEI5rksOWWrF4SIcGprI3q486P3bXZ8XGyV/SBeQ4v+AUzOBMmUiT6MgAAAABJRU5ErkJggg==" /><span>扫快码下载</span>
+					</div>
+				</div>
+				<div class="downloads-wrap">
+					<!--流口令-->
+					<div class="command-content">
+						<!--<p>流口令：<span id="stream_token">streamapp://s/HelloH5</span></p>-->
+						<p>流口令：<input style="border: none;" readonly="readonly" id="stream_token" value="streamapp://s/HelloH5" /></p>
+						<a class="copy-command" href="javascript:;">复制</a>
+					</div>
+					<!--二维码-->
+					<div class="qrcode-content">
+						<img class="qrcode" src="//img-cdn-qiniu.dcloud.net.cn/newqrhelloh5plus.png" />
+						<span>扫描二维码下载</span>
+						<p>或在你的流应用中输入<span class="code">358</span></p>
+					</div>
+					<!--应用下载-->
+					<div class="downloads-content" id="download_list">
+						<div class="download-row">
+							<button class="btn btn-primary stream" type="button">省流量流式加载(<span class="pkg-size"></span>)</button>
+						</div>
+						<div class="download-row">
+							<button class="btn btn-secondary package" type="button">全量下载(<span class="pkg-size"></span>)</button>
+						</div>
+					</div>
+					<!--更多-->
+					<div class="more" id="more">
+						<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAASCAYAAAAzI3woAAAA3klEQVRIS73WsQ0CIRQG4EdorJzAbXSMV5A4gZM4gQkFY+g2TmBlQzDvAniedxwPOGggBHhfoPgR4JvW+khDpdQjzPXop3UFFTXG7K21FwDYOefuvVCEEUKcAOAtpbwi4msAedTBWnvuhZpgboj4JEcE9UQtYf5APVApzCxoS9QaZhG0BSoHkwS1ROViVkEtUBxMFqgGxcVkg0pQJRgWiIMqxbBBOagaTBEoharFFIPmUMNh36CM2cT9MfxkGXezMSYGst9LqV2MqbqhgB+hoBbTBBSej/rwheDe9Hj9BxnlByK3W3UrAAAAAElFTkSuQmCC" />
+					</div>
+				</div>
+			</div>
+			<!--pc显示内容-->
+			<div class="pc-info">
+				<div class="pc-logo" style="position: absolute;left: -126px;">
+					<img src="//img-cdn-qiniu.dcloud.net.cn/h5.png" style="width: 90px;height: 90px;" />
+				</div>
+				<div class="pc-barcode" style="position: absolute;right: 0;">
+					<img src="//img-cdn-qiniu.dcloud.net.cn/newqrhelloh5plus.png" style="width: 160px;height: 160px;" />
+				</div>
+				<div class="pc-name">
+					<h2>HelloH5-HTML5专家</h2>
+					<p>原生40万API随意调用</p>
+				</div>
+				<div class="pc-download">
+					<button class="btn btn-download android" type="button"><span class="icon icon-android publish_iconfont">&#xe616;</span>Android平台下载</button>
+					<button class="btn btn-download ios" type="button"><span class="icon icon-android publish_iconfont">&#xe61f;</span>iOS平台下载</button>
+				</div>
+			</div>
+			<!--应用描述-->
+			<div class="desc-content">
+				<h2>应用描述</h2>
+				<pre>HTML5中国产业联盟，简称“HTML5+ 联盟”，是为了更好的推进HTML5的商用、更好的为HTML5开发者服务而由产业链主流厂商共同组成的一个联盟。</pre>
+			</div>
+			<!--应用截图-->
+			<div class="screenshots-content">
+				<h2>应用截图</h2>
+			</div>
+			<div class="list-wrap">
+				<ul>
+					<li><img src="http://img.wdjimg.com/mms/screenshot/e/9f/c99763e75bd65ade4da14d2ac69759fe_320_570.jpeg"></li>
+					<li><img src="http://img.wdjimg.com/mms/screenshot/9/8b/15a68fb4046ebb916cca01b755f5b8b9_320_570.jpeg"></li>
+					<li><img src="http://img.wdjimg.com/mms/screenshot/e/a5/48b52b96ba0d47e4e3ecd05a8a70fa5e_320_570.jpeg"></li>
+					<li><img src="http://img.wdjimg.com/mms/screenshot/3/bc/db2bed26f17a64800fb52c114e2afbc3_320_570.jpeg"></li>
+					<li><img src="http://img.wdjimg.com/mms/screenshot/5/ca/674c41197e98afba0619928c15904ca5_320_570.jpeg"></li>
+				</ul>
+			</div>
+			<!--底部弹出层-->
+			<!--<div class="overlay hide" id="tips_mask">-->
+			<div class="overlay hide" id="tips_mask">
+				<div class="bottom-wrap">
+					<div class="head-content">
+						<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADcAAAA3CAYAAACo29JGAAAFWElEQVRoQ+2abWxTVRjHf+febXUb6zYYsDdGYuIXDaDSTibISwJRPoghoggstExkBjWSEAUiWUgICA4MmJjoB7MNHQm+fCLRDEKERCHQ+UKCJugcka0FMrb1Zd3Wresxt2sLY2+3ZYxu9n5q2uc55/nd/3me5/bcI5jElxiOLeeLhRkpSs9SRfC8hGJgJqDEwb0ICGiRSJsQyqlOVZxpK73oHiquIeEKq0xLQdkmhVwJpMQB0HAh+EHWBVA/uWG9eOpeo0Fw+TXmrUJSEVIqjrkGhHYb5H67pf4IAhn+ZQBcQVXxmwj5MZA6UajuitOHlDvt1vqjYcAIXOEx8xIZ4FsgZwKChUN2KYpY27TxUp32RRBu6lfPGFP9gS+BVRMYLBz6GYRYa7dcag3C5VeZXxSCbwDDJIALSMF6h8V2IghXUGX+FMHW+wGLZPE9gwzba+5nslF95TG7td7Sr1y12SbANKrPEAYCQUePly6/r3+N330JyHzESLKSjJSBWIaP1eeK3Wqb069ctfk6MCuWkXx9vSzLK6FkxlP4+noiQyQpSfT4fXx39Xuu+eykp6YyjnxNdqutKAzXrDHGAufu8nCo5AO2zCvlTofpL1VOt5MNn5dT5/2J3EcLBv4ey2T6fZrtVtusMFwTUKjfN2QpwN3p4UPzTt6abxnk3uZsZ13lJk67LpA/twgM45aBYwe337yDt+dbB8G1OttYX1nG6fbz5M0tQqQp46XeOMI5z5M3JwEXdWYM45BQbuQ7GSoo/++cm9QFJQE3VrUkOM44FpSEcgnl9N6BxLJM9LlEE5+0/woSrUBvIdRll6iWiWqZqJaJaqmrWOgxGruCss+8g3eG2/069Dqn2s9TEKNyUg63UT8i4xjBeT0cLtnNG09uGDTb7fZW1uxdx7m2sxjmFaGk69/a05hURcGYMgVVUYkScmzgXJ0etj++mT2Ltw+Cc7ldHDh+mL+6G5n+WAGKQdWzpII2ilDw9nTy8816nNKNQTUgB2xpP2jlgN6An2SPYJ/5fSwL1obe+PVP7PP5uP7vdaYas8maMRUR5Yazo/UGr57Ywu9cJceYQyCg+2XKGCinvRIQAk93B0obHFlcwcaSO4AaXGNjIxkZGeTm5qKqatBe79V0y86a6jKupDcyLWsagb5xhtMC1YJ2drpQWwMcfq6CTYvWR5RraGjAaDQOgNML2HSrmZdryvgj7drDg4sAdrkQtwMcfHYX5UsswWWpwWUaM5mZOzOi3ISDCwO6u9zQGuCjhbvYvKCUhn8aSJuSTl5eHooa3Rkde4uD1VXWh69cOI80AE+3F6Wtj72m93ipcDlpmVNIz04PnS/Q+tboeaelpqPlBq/VlnM59W9ysnJizrmY36wOVRy0ZdfV202yCxYo88hWjIgkBRERbnS4JEWlo7uDC52X8Uz3YUgxIAO6G/qAavkL8LTeKqbHTiiCXr8ft9OF39sTbRMO2qtqElk52aSkpkTlL+DPZqvtidBphuLPELJcT9DR2ggtzyKK6b7zaAcJNGvplxDlI5iEWofVVhqEK6wpXi2lPAEkRxt8PNoLKG222mqDcEW1i7L9vb7jAl6Ix2Cjiklyrk/6X7lZ9ltLJLPzq0wrhBBfA1lRDRZfxl4pWefYZDuphXWnbElEQbXpXYQ4MEGPSfmBCvvs9EqWndU+39NwNMAa0zYQu7XzbvElyojRuEBU2menHQyDDYYL+RfWmFYi2SYRy+Pk6O8IZPJHKTjquFZ/kj0MeLIetptqRaav17cC0I4Czw/l4ujd98HLrTUGtxDiVyFlHf6kH5o3X2gb8mHiwcfy8Gb4D3YPgGWdS8NdAAAAAElFTkSuQmCC" />
+						<h2>流应用</h2>
+						<p class="loading-tip" style="display: inline-block;color: red;">正在启动...</p>
+					</div>
+					<div class="tips-content">
+						<div class="tip-download hide">
+							<h3 class="tip-title">下载安装流应用后，你可以：</h3>
+							<ul>
+								<li>请
+									<a class="reload" href="javascript:;">刷新</a>此界面</li>
+								<li>或
+									<a class="copy-command" href="javascript:;">复制流应用口令</a>后再启动流应用</li>
+							</ul>
+						</div>
+						<div class="tip-loading show">
+							<p class="tip-desc">若本机未安装流应用，您需要先下载安装流应用。</p>
+						</div>
+					</div>
+					<button class="btn btn-primary action" data-action="download" type="button">开始下载</button>
+				</div>
+			</div>
+			<!--快码弹出层-->
+			<div class="overlay hide" id="qrcode_mask">
+				<div class="qrcode-wrap">
+					<div class="close">
+						<img class="img close" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAnCAYAAACMo1E1AAACBklEQVRYR83YsUrEMBgH8H/AtHhFHNx8C+HAOmWQG/ScXMTVySdQxMHncNPFwcVFUGhBe8K9iuOhg8MtlUhbclyTy5ekxU439NLf/XP5vjQM//hi0lYUxSWAawAfcRyfpmn63ac5z/MtzvkDgBTAhRDiVj6/xknMRgWaxnF80BewgmUAdqrnfwohtlXcM4CxklYvwBaYJDwKIU4aXJZlm1EUvVax1sZOgW0wxtj7YDAYD4fDnwYnP/QJtIEt4PoC2sKWcF0DKbBWnAk4n88PR6PRl0uZocK0uNBAF5gRFwroCluJ8wX6wKxwrkBfmDWOCgwBI+EU4AuAPbXVqatY05LekiQ5qiu/7Wr/a/yUq+okrUDG2BrnXG3icmgnGDm5+kfogADWld2FF8wZZ5hidRKcE6sHIU+r+nRNgt6JBcFp/vxy7KlPq/PGGWD12N5Ap2nV1bGyLGNTmaFUBacFYSqws9mMR1FkrIMUICk5m8pvqoPU7ZY1zga2qg5SF4kVzqUlhUhwJc4FFipBI84HFgKoxYWA+QJbcSFhPsAlXBcwV+ACrkuYC7DB9QGjAv9wfcIowPp8Lgewr/Q9742iTQ/VFOonIcRx0/iLolAPD3uBGRJcPDycTCbnZVneyBPYJEnOqG9JNimZ7pEJcs7vGGO7AK6EEPdOWyZfCOX7K3srZbDQ9/4CzIrON86Qi88AAAAASUVORK5CYII=" />
+					</div>
+					<img class="qrcode" src="//img-cdn-qiniu.dcloud.net.cn/newqrhelloh5plus.png" />
+					<img class="channel" src="img/channel.png" />
+					<p class="desc">下载APP、关注公众号、微博</br>请用相关软件扫描“快码”，秒装APP</p>
+				</div>
+			</div>
+		</div>
+		<script src="http://cdn.dcloud.net.cn/gostream.min.js?appid=HelloMUI" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			// 部分配置信息
+			var config = {
+				stream_token: 'streamapp://s/HelloH5', //流口令
+				stream_android_url: 'http://www.dcloud.io/download/streamapp.apk',
+				stream_ios_url: 'https://itunes.apple.com/cn/app/流应用/id793135951', //appstore上应用的地址
+				appid: 'HelloH5', //appid
+				android_url: 'http://www.dcloud.io/download/streamapp.apk', //安卓下载地址
+				ios_url: 'https://itunes.apple.com/cn/app/流应用/id793135951', //appstore应用地址
+				android_size: '',
+				ios_size: '',
+			};
+			var domReady = function(callback) {
+				var readyRE = /complete|loaded|interactive/;
+				if(readyRE.test(document.readyState)) {
+					callback();
+				} else {
+					document.addEventListener('DOMContentLoaded', callback, false);
+				}
+			};
+			var serializeData = function(data) {
+				var params = [];
+				if(data) {
+					for(var key in data) {
+						if(data.hasOwnProperty(key)) {
+							params.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
+						}
+					}
+				}
+				if(params.length) {
+					return params.join('&');
+				}
+				return '';
+			};
+			var appendQuery = function(url, queryString) {
+				if(typeof queryString !== 'string') {
+					queryString = serializeData(queryString);
+				}
+				return(url + '&' + queryString).replace(/[&?]{1,2}/, '?');
+			};
+			var ajax = function(method, url, data, callback) {
+				var xhr = new window.XMLHttpRequest();
+				xhr.onreadystatechange = function() {
+					if(xhr.readyState == 4) {
+						if((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304 || (xhr.status === 0 && xhr.responseText)) {
+							if(callback) {
+								var resJson = false;
+								try {
+									resJson = JSON.parse(xhr.responseText);
+								} catch(e) {
+									resJson = false;
+								}
+							}
+							callback && callback(resJson, xhr);
+						} else {
+							callback && callback(false);
+						}
+					}
+				}
+				var queryString = typeof data === 'string' ? data : serializeData(data);
+				if(queryString && method === 'GET') {
+					url = appendQuery(url, queryString);
+				}
+				xhr.open(method, url);
+				if(method === 'POST' && typeof data !== 'string') {
+					xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+				}
+				xhr.send(method === 'POST' ? queryString : false);
+				return xhr;
+			};
+			//TODO 复制内容至剪贴板
+
+			// 启动流应用
+			var openStreamApp = function(options) {
+				options = options || {
+					scheme: config.stream_token,
+					appid: config.appid
+				};
+				if(os.android) {
+					openStreamForAndroid(options, openStreamByService);
+				} else {
+					openStreamForIos(options);
+				}
+			};
+			// 通过流基座的服务接口启动流应用
+			var openStreamByService = function(options) {
+				options.port = options.port || 13137;
+				//				var url = 'http://127.0.0.1:{port}/?action=start&appid={appid}';
+				//				url = url.replace('{port}', options.port);
+				//				url = url.replace('{appid}', options.appid);
+				var url = 'http://127.0.0.1:13137/?action=info';
+				ajax('GET', url, {}, function(res) {
+					if(!res) { //未能返回请求成功的信息
+						check(now(), 0);
+					} else {
+						// 返回了请求成功的信息，不做任何后续操作；
+					}
+				});
+			};
+			// 通过scheme启动流应用
+			var openStreamForAndroid = function(options, callback) {
+				var scheme = options.scheme;
+				var ua = navigator.userAgent;
+				alert('ua:' + ua)
+				if(ua.indexOf('360') > 0) {
+					location.href = scheme;
+				} else if(ua.indexOf('Chrome') > 0) {
+					var token = scheme.replace('streamapp', 'intent');
+					var div = document.createElement('a');
+					div.style.width = '2px';
+					div.style.height = '2px';
+					div.href = token + '#Intent;scheme=streamapp;end';
+					document.body.appendChild(div);
+					eventFire(div, 'click');
+				} else {
+					var iframe = document.createElement('iframe');
+					iframe.style.display = 'none';
+					document.body.appendChild(iframe);
+					iframe.src = scheme;
+				}
+				// 尝试检测启动流应用是否成功
+				setTimeout(function() {
+					callback(options);
+				}, 100);
+			};
+
+			// 通过intent打开流应用
+			var openStreamByIntent = function(options, callback) {
+				var token = options.scheme.replace('streamapp', 'intent');
+				var div = document.createElement('a');
+				div.style.width = '2px';
+				div.style.height = '2px';
+				div.href = token + '#Intent;scheme=streamapp;end';
+				document.body.appendChild(div);
+				eventFire(div, 'click');
+			};
+
+			// iOS平台启动流应用
+			var openStreamForIos = function(options) {
+				var now = +new Date;
+				window.location.href = options.scheme;
+				check(now, 600);
+			};
+			// 检测js是否被挂起，即是否启动了流应用；
+			var check = function(t, d) {
+				setTimeout(function() {
+					var time = now() - t;
+					if(os.android && time < 760) {
+						toggleMask(document.getElementById('tips_mask'));
+					} else if(os.ios) {
+						window.location.href = config.stream_ios_url;
+					}
+				}, d);
+			};
+
+			var eventFire = function(element, eventType) {
+				if(element.fireEvent) {
+					element.fireEvent('on' + eventType);
+				} else {
+					var eventObj = document.createEvent('Events');
+					eventObj.initEvent(eventType, true, false);
+					element.dispatchEvent(eventObj);
+				}
+			};
+			var now = Date.now || function() {
+				return new Date().getTime();
+			};
+			// 操作系统信息，后面考虑改成方法；
+			var os = {
+				android: false,
+				ios: false
+			};
+
+			// 主要处理类似QQ浏览器这种，首次加载时，window.innerHeight的值未减去浏览器控制条高度的情况；
+			var getScreenHeight = function() {
+				return document.documentElement ? document.documentElement.clientHeight : window.innerHeight;
+			};
+
+			var init = function() {
+				// 动态设置首屏容器的高度
+				document.querySelector('.info.mobile').style.height = getScreenHeight() + 'px';
+				var ua = navigator.userAgent;
+				if(ua.match(/(Android);?[\s\/]+([\d.]+)?/)) {
+					os.android = true;
+				} else if(ua.match(/(iPhone\sOS)\s([\d_]+)/)) {
+					// 暂时不考虑ipad，ipad按pc处理；
+					os.ios = true;
+				}
+				// 加载完页面，即刻开始启动流应用；
+				openStreamApp();
+				// 动态显示“全量下载”
+				var packageBtn = document.querySelector('.downloads-content .package');
+				var packageInfo = getNativeAppInfo();
+				if(packageInfo) {
+					packageBtn.innerHTML = '全量下载(<span class="pkg-size">' + packageInfo.size + '</span>)';
+					packageBtn.style.visibility = 'visible';
+				}
+			};
+			var toggleMask = function(element) {
+				var className = element.className;
+				if(~className.indexOf('hide')) {
+					element.className = element.className.replace('hide', 'show');
+				} else if(~className.indexOf('show')) {
+					element.className = element.className.replace('show', 'hide');
+				}
+			};
+			var getNativeAppInfo = function() {
+				if(os.android && config.android_url) {
+					return {
+						url: config.android_url,
+						size: config.android_size
+					}
+				} else if(os.ios && config.ios_url) {
+					return {
+						url: config.ios_url,
+						size: config.ios_size
+					}
+				} else {
+					return null;
+				}
+			};
+
+			domReady(function() {
+				return;
+				init();
+				//TODO 初始化底部引导框
+				var bottomMask = {
+					selector: {
+						containerSelector: '#tips_mask',
+						toastSelector: '.loading-tip',
+						actionSelector: '.action',
+						launchSelector: '.tip-download',
+						downloadSelector: '.tip-loading',
+					},
+					init: function() { //初始化
+						this.containerElem = document.querySelector(this.selector.containerSelector);
+						this.toastElem = this.containerElem.querySelector(this.selector.toastSelector);
+						this.actionElem = this.containerElem.querySelector(this.selector.actionSelector);
+						this.launchElem = this.containerElem.querySelector(this.selector.launchSelector);
+						this.downloadElem = this.containerElem.querySelector(this.selector.downloadSelector);
+					},
+					launch: function() { //启动应用
+						this.toastElem.innerText = '正在启动...';
+						this.actionElem.setAttribute('data-action', 'download');
+						this.actionElem.innerText = '开始下载';
+						toggleMask(this.launchElem);
+						toggleMask(this.downloadElem);
+					},
+					download: function() { //下载应用
+						this.toastElem.innerText = '正在下载...';
+						this.actionElem.setAttribute('data-action', 'close');
+						this.actionElem.innerText = '我知道了';
+						toggleMask(this.downloadElem);
+						toggleMask(this.launchElem);
+					}
+				};
+				bottomMask.init();
+
+				var tokenEL = document.getElementById('stream_token');
+				//TODO 复制成功或失败后续的引导
+				var copyEvent = function(event) {
+					tokenEL.select();
+					var result = false;
+					if(document.execCommand) {
+						result = document.execCommand('copy', false);
+						if(result) {
+							// 复制成功
+							event.target.innerText = '复制成功';
+							event.target.removeEventListener('click', copyEvent);
+						}
+					} else {
+						//TODO 复制失败提示
+					}
+				};
+
+				var el = document.querySelector('.copy-command');
+				el.addEventListener('click', copyEvent);
+
+				// 部分元素
+				var moreEl = document.getElementById('more');
+				var showEl = document.getElementById('show_qrcode');
+				var qrMask = document.getElementById('qrcode_mask');
+				var tipsMask = document.getElementById('tips_mask');
+				var downloadList = document.getElementById('download_list');
+
+				// 操作系统信息
+
+				// 首屏底部箭头直接翻至下一页
+				moreEl.addEventListener('click', function() {
+					document.body.scrollTop = window.innerHeight + 1;
+				});
+				// 弹出快码
+				showEl.addEventListener('click', function() {
+					toggleMask(qrMask);
+				});
+				if(os.android || os.ios) {
+					// 快码弹出层的触摸事件
+					qrMask.addEventListener('touchstart', function(event) {
+						var target = event.target;
+						event.preventDefault();
+						event.stopPropagation();
+						if(~target.className.indexOf('overlay')) {
+							toggleMask(qrMask);
+						} else if(~target.className.indexOf('close')) {
+							toggleMask(qrMask);
+						}
+					});
+
+					// 提示信息遮罩的触摸事件
+					tipsMask.addEventListener('touchstart', function(event) {
+						var target = event.target;
+						event.preventDefault();
+						event.stopPropagation();
+						if(~target.className.indexOf('overlay')) {
+							toggleMask(tipsMask);
+						} else if(~target.className.indexOf('action')) {
+							var action = target.getAttribute('data-action');
+							switch(action) {
+								case 'close':
+									toggleMask(tipsMask);
+									//TODO 关闭后，需要重置底部提示部分；
+									bottomMask.launch();
+									break;
+								case 'download':
+									//TODO 下载应用
+									bottomMask.download();
+									window.location.href = config.stream_android_url;
+									break;
+								default:
+									break;
+							}
+						} else if(~target.className.indexOf('reload')) {
+							window.location.reload();
+						}
+					});
+				} else { //pc设备
+					// 快码弹出层的点击事件
+					qrMask.addEventListener('click', function(event) {
+						var target = event.target;
+						event.preventDefault();
+						event.stopPropagation();
+						if(~target.className.indexOf('overlay')) {
+							toggleMask(qrMask);
+						} else if(~target.className.indexOf('close')) {
+							toggleMask(qrMask);
+						}
+					});
+				}
+
+				// 下载应用
+				downloadList.addEventListener('click', function(event) {
+					var target = event.target;
+					if(target.tagName === 'BUTTON') {
+						if(~target.className.indexOf('stream')) {
+							openStreamApp({
+								scheme: config.stream_token,
+								appid: config.appid
+							});
+						} else if(~target.className.indexOf('package')) {
+							if(os.android) {
+								window.location.href = config.android_url;
+							} else if(os.ios) {
+								window.location.href = config.ios_url;
+							}
+						}
+					}
+				});
+			});
+		</script>
+	</body>
+
+</html>
