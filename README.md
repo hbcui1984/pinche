@@ -10,7 +10,7 @@
 
 ## 程序说明
 
-后台基于php原生开发，无使用任何框架。数据库使用mysql。
+后台基于php原生开发，无使用任何框架。数据库使用mysql，表结构定义参考：init.sql
 
 前端基于 [mui](https://dev.dcloud.net.cn/mui/) 框架开发
 
